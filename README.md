@@ -76,14 +76,14 @@ To search for a keyword, use `‘<keyword>’ in foundStrings`
 For example:
 
 ```python
-elif ‘off’ in foundStrings:
+if ‘off’ in foundStrings:
 	turnOff()
 ```
 
 To search for multiple keywords, use two of the above conditions chained with an and statement.
 
 ```python
-elif ‘off’ in foundStrings and ‘turn’ in foundStrings:
+if ‘off’ in foundStrings and ‘turn’ in foundStrings:
 	turnOff()
 ```
 
