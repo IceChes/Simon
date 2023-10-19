@@ -11,7 +11,7 @@ from pocketsphinx import LiveSpeech
 def removePunctuation(str):
   return str.replace(",", "").replace(".", "").lower() # This function removes punctuation/capitalization from an input string.
 
-audioFiles_unknown = ["Lines/unknown1.wav", "Lines/unknown2.wav", "Lines/unknown3.wav", "Lines/unknown4.wav"] # Configure random audio files.
+audioFiles_unknown = ["Lines/unknown1.wav", "Lines/unknown2.wav", "Lines/unknown3.wav"] # Configure random audio files.
 audioFiles_notNow = ["Lines/notnow1.wav", "Lines/notnow2.wav", "Lines/notnow3.wav", "Lines/notnow4.wav"]
 
 esp32 = serial.Serial(port=input("ESP32 port: "), baudrate=115200, timeout=1) # Define the ESP32
@@ -67,7 +67,7 @@ print("Ready.") # The model takes a bit to load in so this is nice to have.
 
 while True: # Start program loop.
 
-    speech = LiveSpeech(keyphrase='simon', kws_threshold=1e-12)
+    speech = LiveSpeech(keyphrase='simon', kws_threshold=1e-10)
 
     for phrase in speech:
 
@@ -91,18 +91,19 @@ while True: # Start program loop.
         splitInput = inputFiltered.split() 
 
         foundStrings = set(splitInput) & set(keywords.values())  # Compare the split input and keyword dictionary.
-
+        print(splitInput)
+        print(foundStrings)
         if {'off', 'disable'}.intersection( # This checks for "off" OR "disable" AND "light" OR "lights".
             set(foundStrings)) and {'light', 'lights'}.intersection( 
-            set(foundStrings)) in foundStrings:
+            set(foundStrings)):
             playsound('Lines/nodelights2.wav')
             espWrite('0')
 
         elif {'on', 'enable'}.intersection(
             set(foundStrings)) and {'light', 'lights'}.intersection( 
-            set(foundStrings)) in foundStrings:
-            playsound('Lines/nodelights2.wav')
-            espWrite('0')
+            set(foundStrings)):
+            playsound('Lines/nodelights1.wav')
+            espWrite('1')
 
         elif 'shut' in foundStrings and 'down' in foundStrings or {'shutdown'}.intersection(set(foundStrings)) : # This checks for "shut" AND "down" OR "shutdown".
             playsound('Lines/powerdown1.wav')
