@@ -14,7 +14,7 @@ Please don't install Simon yet if you don't want to do development with it. It's
 
 To install Simon on Linux, run the installer script. To install Simon on Windows... figure it out I guess.
 
-`./installer.sh`
+`./installer.sh` (installer.sh doesn't actually exist yet)
 
 The installer grabs all necessary python packages via pip. If you are on Arch Linux, you probably need to make a venv for Simon before you run the installer.
 
