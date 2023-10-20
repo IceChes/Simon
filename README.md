@@ -18,6 +18,15 @@ Simon relies on 5 core components.
 - Totally modular.
 - Based on widely available parts and libraries.
 
+# Todo
+
+- MQTT system.
+- Node code and Simon_Node_Config.h.
+- Hub ESP code and Simon_Hub_Config.h.
+- Complete the search tree.
+- Installer.
+- Re-synthesize voice lines.
+
 # Installation
 
 Please don't install Simon yet if you don't want to do development with it. It's not finished.
