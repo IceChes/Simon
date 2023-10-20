@@ -9,8 +9,25 @@ import time
 from pocketsphinx import LiveSpeech
 
 def removePunctuation(str):
-  return str.replace(",", "").replace(".", "").lower() # This function removes punctuation/capitalization from an input string.
+    return str.replace(",", "").replace(".", "").lower() # This function removes punctuation/capitalization from an input string.
 
+def recordAndTranscribe():
+    recording = sd.rec(int(duration * freq), samplerate=freq, channels=1) # Record mono audio with the defined parameters.
+
+    playsound('Lines/standby.wav')
+
+    print("Standing by.") # Let the user know that Simon is ready.
+
+    sd.wait() # Wait for the audio to record.
+
+    write("/dev/shm/question1.wav", freq,recording) # Write the audio to RAM.
+
+    result = model.transcribe("/dev/shm/question1.wav") # Transcribe the audio using Whisper.
+
+    print(result["text"]) # Print out what Whisper heard.
+    
+    return result
+    
 audioFiles_unknown = ["Lines/unknown1.wav", "Lines/unknown2.wav", "Lines/unknown3.wav"] # Configure random audio files.
 audioFiles_notNow = ["Lines/notnow1.wav", "Lines/notnow2.wav", "Lines/notnow3.wav", "Lines/notnow4.wav"]
 
@@ -47,7 +64,7 @@ keywords = {  # Define recognized keywords. They don't have to be categorized li
   17: 'computer',
   18: 'car',
   19: 'lights',
-  20: 'lights',
+  20: 'light',
   # Shutdown
   21: 'shut',
   22: 'down',
@@ -67,26 +84,14 @@ print("Ready.") # The model takes a bit to load in so this is nice to have.
 
 while True: # Start program loop.
 
-    speech = LiveSpeech(keyphrase='simon', kws_threshold=1e-10)
+    speech = LiveSpeech(keyphrase='simon', kws_threshold=1e-7)
 
     for phrase in speech:
 
-        recording = sd.rec(int(duration * freq), samplerate=freq, channels=1) # Record mono audio with the defined parameters.
-
-        playsound('Lines/standby.wav')
-
-        print("Standing by.") # Let the user know that Simon is ready.
-
-        sd.wait() # Wait for the audio to record.
-
-        write("/dev/shm/question1.wav", freq,recording) # Write the audio to RAM.
-
-        result = model.transcribe("/dev/shm/question1.wav") # Transcribe the audio using Whisper.
-
-        print(result["text"]) # Print out what Whisper heard.
+        rawInput = recordAndTranscribe()
 
         # Clean up input and split into tokens.
-        input = result["text"] 
+        input = rawInput["text"] 
         inputFiltered = removePunctuation(input)
         splitInput = inputFiltered.split() 
 
