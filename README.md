@@ -1,3 +1,6 @@
+# Warning
+This project is DEFUNCT, but it will still serve as a good base for voice assistant projects.
+
 # Simon
 Simon is a modular personal assistant that runs on any Linux PC. It requires fairly powerful hardware but should run on most modern SBCs.
 
@@ -17,15 +20,6 @@ Simon relies on 5 core components.
 - Cross-platform.
 - Totally modular.
 - Based on widely available parts and libraries.
-
-# Todo
-
-- MQTT system.
-- Node code and Simon_Node_Config.h.
-- Hub ESP code and Simon_Hub_Config.h.
-- Complete the search tree.
-- Installer.
-- Re-synthesize voice lines.
 
 # Installation
 
