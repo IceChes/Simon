@@ -13,6 +13,7 @@ Simon relies on 5 core components.
 - ESP32 MQTT mesh (unfinished)
 - Voice line database
 - Voice parsing script (unfinished)
+- I was looking through here and realized I said 5 components and listed 4.
 
 # Features
 
